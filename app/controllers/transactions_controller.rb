@@ -2,6 +2,19 @@ class TransactionsController < ApplicationController
   def index
     @transactions = Transaction.all
     @total = Transaction.sum(:amount)
+
+    @chart_data = {
+      labels: @transactions.pluck(:description),
+      datasets: [
+        {
+          label: 'Transaction Amounts',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+          data: @transactions.pluck(:amount)
+        }
+      ]
+    }
   end
 
   def new
