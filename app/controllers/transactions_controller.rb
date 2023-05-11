@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
   def index
     @transactions = Transaction.all
+    @transactions = Kaminari.paginate_array(@transactions).page(params[:page]).per(5)
     @total = Transaction.sum(:amount)
 
     @chart_data = {

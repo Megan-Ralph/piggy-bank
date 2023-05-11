@@ -41,8 +41,9 @@
     </tbody>
   </table>
 
-  <%= link_to "New", new_transaction_path, class: "btn btn-outline-primary" %>
+  <%= paginate @transactions %>
 
+  <%= link_to "New", new_transaction_path, class: "btn btn-outline-primary" %>
   <hr class="my-4">
 
   <canvas id="transaction-chart" class="graph"></canvas>
