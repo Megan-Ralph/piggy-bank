@@ -1,2 +1,26 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+$primary: pink;
+
+.btn-primary { 
+  background-color: pink; 
+  border-color: pink; 
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: $pink-400;
+  border-color: pink;
+}
+
+.btn-outline-primary { 
+  border-color: pink; 
+  color: pink; 
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary.active, .open>.dropdown-toggle.btn-outline-primary {
+  color: #fff;
+  background-color: $pink-400;
+  border-color: pink;
+}

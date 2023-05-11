@@ -1,23 +1,27 @@
-<h1>New Transaction</h1>
+<div class="container">
+  <h1>New Transaction</h1>
 
-<%= form_with(model: @transaction, url: transactions_path) do |form| %>
-  <div>
-    <%= form.label :description %>
-    <%= form.text_field :description, required: true %>
-    <% @transaction.errors.full_messages_for(:description).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+  <%= form_with(model: @transaction, url: transactions_path, class: "mb-3") do |form| %>
+    <div class="mb-3">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_field :description, required: true, class: "form-control" %>
+      <% @transaction.errors.full_messages_for(:description).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :amount %>
-    <%= form.text_field :amount, required: true %>
-    <% @transaction.errors.full_messages_for(:amount).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div class="mb-3">
+      <%= form.label :amount, class: "form-label" %>
+      <%= form.text_field :amount, required: true, class: "form-control" %>
+      <% @transaction.errors.full_messages_for(:amount).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <%= form.submit "Create Transaction" %>
-<% end %>
+    <div class="mb-3">
+      <%= form.submit "Create Transaction", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 
-<%= link_to "Back", transactions_path %>
+  <%= link_to "Back", transactions_path, class: "btn btn-outline-primary" %>
+</div>
