@@ -20,6 +20,11 @@
 <div class="container">
   <h1>Transactions</h1>
 
+  <%= form_tag transactions_path, method: :get do %>
+    <%= text_field_tag :search, params[:search], placeholder: 'Search Transactions' %>
+    <%= submit_tag 'Search' %>
+  <% end %>
+
   <table class="table">
     <thead>
       <tr>
@@ -28,16 +33,20 @@
       </tr>
     </thead>
     <tbody>
-      <% @transactions.each do |transaction| %>
+      <% if @transactions.present? %>
+        <% @transactions.each do |transaction| %>
+          <tr>
+            <td><%= transaction.description %></td>
+            <td><%= number_to_currency(transaction.amount) %></td>
+          </tr>
+        <% end %>
         <tr>
-          <td><%= transaction.description %></td>
-          <td><%= number_to_currency(transaction.amount) %></td>
+          <td>Total</td>
+          <td><%= number_to_currency(@total) %></td>
         </tr>
+      <% else %>
+        <p>No transactions found.</p>
       <% end %>
-      <tr>
-        <td>Total</td>
-        <td><%= number_to_currency(@total) %></td>
-      </tr>
     </tbody>
   </table>
 

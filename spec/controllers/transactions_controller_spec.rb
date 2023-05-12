@@ -7,6 +7,16 @@ RSpec.describe TransactionsController, type: :controller do
       expect(response).to be_successful
     end
 
+    it "returns transactions matching the search term" do
+      transaction1 = create(:transaction, description: "Transaction 1", amount: 100)
+      transaction2 = create(:transaction, description: "Transaction 2", amount: 200)
+
+      get :index, params: { search: 'Transaction 1' }
+
+      expect(assigns(:transactions)).to eq([transaction1])
+      expect(response).to render_template(:index)
+    end
+
     it "assigns @transactions" do
       transactions = create_list(:transaction, 3)
       get :index
@@ -40,8 +50,8 @@ RSpec.describe TransactionsController, type: :controller do
 
   describe "GET export_csv" do
     it "exports the transactions as CSV" do
-      transaction_one = create(:transaction, description: "Transaction 1", amount: 100)
-      transaction_two = create(:transaction, description: "Transaction 2", amount: 200)
+      transaction1 = create(:transaction, description: "Transaction 1", amount: 100)
+      transaction2 = create(:transaction, description: "Transaction 2", amount: 200)
 
       get :export_csv, format: :csv
 

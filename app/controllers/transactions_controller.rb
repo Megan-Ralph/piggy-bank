@@ -1,6 +1,11 @@
 class TransactionsController < ApplicationController
   def index
-    @transactions = Transaction.all
+    @transactions = if params[:search]
+      Transaction.where('description LIKE ?', "%#{params[:search]}")
+    else
+      Transaction.all
+    end
+
     @transactions = Kaminari.paginate_array(@transactions).page(params[:page]).per(5)
     @total = Transaction.sum(:amount)
 
