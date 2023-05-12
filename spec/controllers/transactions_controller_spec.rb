@@ -17,6 +17,26 @@ RSpec.describe TransactionsController, type: :controller do
       expect(response).to render_template(:index)
     end
 
+    it "returns transactions filtered by category" do
+      general_transaction = create(:transaction, category: 'general')
+      holidays_transaction = create(:transaction, category: 'holidays')
+
+      get :index, params: { category: 'general' }
+
+      expect(assigns(:transactions)).to eq([general_transaction])
+      expect(response).to render_template(:index)
+    end
+
+    it "returns transactions sorted by amount in descending order" do
+      transaction1 = create(:transaction, description: "Transaction 1", amount: 100)
+      transaction2 = create(:transaction, description: "Transaction 2", amount: 200)
+
+      get :index, params: { sort_by: 'amount DESC' }
+
+      expect(assigns(:transactions)).to eq([transaction1, transaction2])
+      expect(response).to render_template(:index)
+    end
+
     it "assigns @transactions" do
       transactions = create_list(:transaction, 3)
       get :index
@@ -26,7 +46,7 @@ RSpec.describe TransactionsController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
-      let(:valid_params) { { transaction: { description: "Salary", amount: "1000.00" } } }
+      let(:valid_params) { { transaction: { description: "Salary", amount: "1000.00", category: :general } } }
 
       it "creates a new transaction" do
         expect {

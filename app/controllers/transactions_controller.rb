@@ -1,9 +1,17 @@
 class TransactionsController < ApplicationController
   def index
-    @transactions = if params[:search]
-      Transaction.where('description LIKE ?', "%#{params[:search]}")
-    else
-      Transaction.all
+    @transactions = Transaction.all
+
+    if params[:search].present?
+      @transactions = @transactions.where('description LIKE ?', "%#{params[:search]}")
+    end
+
+    if params[:category].present?
+      @transactions = @transactions.where(category: params[:category])
+    end
+
+    if params[:sort_by].present? && Transaction.column_names.include?(params[:sort_by])
+      @transactions = @transactions.order(params[:sort_by])
     end
 
     @transactions = Kaminari.paginate_array(@transactions).page(params[:page]).per(5)
@@ -48,6 +56,6 @@ class TransactionsController < ApplicationController
   private
 
   def transaction_params
-    params.require(:transaction).permit(:description, :amount)
+    params.require(:transaction).permit(:description, :amount, :category)
   end
 end

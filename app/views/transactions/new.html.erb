@@ -19,6 +19,14 @@
     </div>
 
     <div class="mb-3">
+      <%= form.label :category, class: "form-label" %>
+      <%= form.select :category, options_for_select(Transaction.categories.keys), prompt: "Select a category" %>
+      <% @transaction.errors.full_messages_for(:category).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <div class="mb-3">
       <%= form.submit "Create Transaction", class: "btn btn-primary" %>
     </div>
   <% end %>
