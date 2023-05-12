@@ -3,5 +3,8 @@ Rails.application.routes.draw do
 
   resources :transactions do
     get '/page/:page', action: :index, on: :collection
+    collection do
+      get 'export_csv'
+    end
   end
 end

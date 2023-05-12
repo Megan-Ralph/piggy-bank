@@ -43,6 +43,8 @@
 
   <%= paginate @transactions %>
 
+  <%= link_to "Export CSV", export_csv_transactions_path(format: :csv), class: "btn btn-outline-primary" %>
+
   <%= link_to "New", new_transaction_path, class: "btn btn-outline-primary" %>
   <hr class="my-4">
 

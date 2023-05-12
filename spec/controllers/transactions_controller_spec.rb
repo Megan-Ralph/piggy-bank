@@ -37,4 +37,23 @@ RSpec.describe TransactionsController, type: :controller do
       end
     end
   end
+
+  describe "GET export_csv" do
+    it "exports the transactions as CSV" do
+      transaction_one = create(:transaction, description: "Transaction 1", amount: 100)
+      transaction_two = create(:transaction, description: "Transaction 2", amount: 200)
+
+      get :export_csv, format: :csv
+
+      expect(response.content_type).to eq('text/csv')
+      expect(response.headers['Content-Disposition']).to include('transactions.csv')
+
+      csv_data = CSV.parse(response.body, headers: true)
+      expect(csv_data.count).to eq(2)
+      expect(csv_data[0]['Description']).to eq('Transaction 1')
+      expect(csv_data[1]['Description']).to eq('Transaction 2')
+      expect(csv_data[0]['Amount']).to eq('100.0')
+      expect(csv_data[1]['Amount']).to eq('200.0')
+    end
+  end
 end
